@@ -1,0 +1,91 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="detailmain">
+        
+        <p>
+            <a href="img/notary.png"><img src="img/notary_t.png" /></a>
+        </p>
+        
+        <p>
+            The list of archive links were collected and sent to Virtual Notary.org. 
+            Virtual Notary is an independent third party which downloads the webpages from the links by itself, obtains the content and signs it. Finally a certificate and a notary log are provided. 
+        </p>
+
+        <p>
+            The signed certificate states in the following format:
+        </p>
+
+        <p>
+            <pre class="quote">
+Virtual-Notary.Org hereby notes that on
+  Date: Friday January 23, 2015 02:59.23 EST (UTC-0500) 
+  the contents of the web page at the address
+  URL: xxxxx 
+  had the following HTML content:
+  [omitted]
+            </pre>
+        </p>
+
+        <p>
+            Each certificate is protected by asymmetric encryption, meaning only the organization with the secret private key can produce/modify such certificate. Others are not able to modify it during redistribution or the certificate will be invalid. 
+            Check the <a href="http://virtual-notary.org/t/faq/">Virtual-Notary.org FAQ page</a> for details.
+        </p>
+        
+        <h1>Verification Options</h1>
+
+        <ul>
+            <li>
+                Submit the certificate to Virtual-Notary.org to examine it.
+            </li>
+            <li>
+                Offline processing. Using tools such as OpenSSL. 
+
+                <p>
+                    If Virtual Notary goes offline one day, the certificates and its content can still be verified. Offline processing is also suitable for batch certificate examination.
+                </p>
+                <p>Use the following OpenSSL command to extract a p12 file. The password is empty.</p>
+                <p class="quote">
+                    openssl pkcs12 -in cert.p12 -out cert.txt -password pass:
+                </p>
+                <p>
+                    You will see 2 smaller certificates in the output. The first one certifies the content of the webpage. The second one is the public key certificate. 
+                    Check the public key certificate against the official public key of Virtual Notary and see it if matches. If not, the certificate is not from Virtual Notary and may be tampered with.
+                </p>
+                <p>
+                    Copy the first the certificate to a new text file. eg. content.txt Then use the following OpenSSL command to see the original text.
+                </p>
+
+                <p class="quote">
+                    openssl x509 -in content.txt -text -noout
+                </p>
+                <p>If you are on Windows, you can also dump the result to a file.</p>
+                <p class="quote">
+                    openssl x509 -in content.txt -text -noout>original.txt
+                </p>
+            </li>
+        </ul>
+
+        <h1>Tips</h1>
+        <ul>
+            <li>To verify all these certificates, you only need to submit one of them to the notary for examination. If it passes then the rest will pass too, given you have checked their public keys matching the official one (the one in the first certificate submitted).</li>
+            <li>Redistribution is encouraged. Because at the end of the day valid certificates are original/untampered.</li>
+        </ul>
+
+        <h1>Known Issues</h1>
+        <ul>
+            <li>Failed links in the list. They failed mostly likely due to Virtual Notary cannot take pages that are too big.</li>
+            <li>At the time of writing, Virtual Notary is a little buggy when examine certificates online. If you see a unicode decoding error. That means the certificate is valid and you can find the decrypted content in the error report.</li>
+            <li>This certification is not archive.today. It does not display the layout as you seen on the screen, but the html text of the page. If you have other copy of the same page you can use this to verify if your copy is original.</li>
+            <li>Currently the only way to get the public key certificate is to extra it from a p12 certificate from the notary. Or extract from a p12 certificate that passes the notary's examination.</li>
+        </ul>
+
+    </div>
+</body>
+</html>
